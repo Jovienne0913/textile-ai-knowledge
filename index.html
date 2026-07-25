@@ -60,7 +60,7 @@
   .filter-bar {
     background: #fff;
     border-bottom: 1px solid #e2e8f0;
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -72,10 +72,29 @@
     align-items: center;
     gap: 0.5rem;
   }
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .filter-row + .filter-row {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #edf2f7;
+  }
   .filter-label {
     font-size: 0.85rem;
     font-weight: 600;
     color: #1a365d;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+  .filter-label-scm {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2b6cb0;
     margin-right: 0.5rem;
     white-space: nowrap;
   }
@@ -102,15 +121,27 @@
     border-color: #3182ce;
     color: #3182ce;
   }
-  /* Active filter state */
-  #filter-all:checked ~ .container label[for="filter-all"],
-  #filter-report:checked ~ .container label[for="filter-report"],
-  #filter-case:checked ~ .container label[for="filter-case"],
-  #filter-tech:checked ~ .container label[for="filter-tech"],
-  #filter-policy:checked ~ .container label[for="filter-policy"] {
+  /* Active filter state - Category (navy) */
+  #cat-all:checked ~ nav label[for="cat-all"],
+  #cat-report:checked ~ nav label[for="cat-report"],
+  #cat-case:checked ~ nav label[for="cat-case"],
+  #cat-tech:checked ~ nav label[for="cat-tech"],
+  #cat-policy:checked ~ nav label[for="cat-policy"] {
     background: #1a365d;
     color: #fff;
     border-color: #1a365d;
+  }
+  /* Active filter state - SCM modules (teal) */
+  #scm-all:checked ~ nav label[for="scm-all"],
+  #scm-procurement:checked ~ nav label[for="scm-procurement"],
+  #scm-cost:checked ~ nav label[for="scm-cost"],
+  #scm-supplier:checked ~ nav label[for="scm-supplier"],
+  #scm-quality:checked ~ nav label[for="scm-quality"],
+  #scm-strategy:checked ~ nav label[for="scm-strategy"],
+  #scm-digital:checked ~ nav label[for="scm-digital"] {
+    background: #2b6cb0;
+    color: #fff;
+    border-color: #2b6cb0;
   }
 
   /* === Content Cards === */
@@ -134,7 +165,6 @@
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.75rem;
-    margin-bottom: 1rem;
   }
   .card-category {
     display: inline-block;
@@ -163,6 +193,34 @@
     color: #a0aec0;
     flex-shrink: 0;
     white-space: nowrap;
+  }
+
+  /* === 供应链模块标签（紧跟卡片标题下方） === */
+  .scm-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .scm-tag {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid;
+  }
+  .scm-procurement { background: #ebf4ff; color: #2b6cb0; border-color: #bee3f8; }
+  .scm-cost { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .scm-supplier { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
+  .scm-quality { background: #faf5ff; color: #6b46c1; border-color: #e9d8fd; }
+  .scm-strategy { background: #fff5f5; color: #c53030; border-color: #fed7d7; }
+  .scm-digital { background: #e6fffa; color: #234e52; border-color: #b2f5ea; }
+
+  .card-body {
+    margin-top: 0.6rem;
   }
   .card-body h4 {
     font-size: 0.85rem;
@@ -204,37 +262,6 @@
     font-weight: 600;
     color: #2b6cb0;
   }
-  /* === 供应链模块二级标签 === */
-  .scm-modules {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.8rem;
-    margin-bottom: 0.2rem;
-  }
-  .scm-tag {
-    display: inline-block;
-    padding: 0.15rem 0.55rem;
-    border-radius: 3px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    border: 1px solid;
-  }
-  .scm-procurement { background: #ebf4ff; color: #2b6cb0; border-color: #bee3f8; }
-  .scm-cost { background: #fefcbf; color: #975a16; border-color: #fefcbf; }
-  .scm-supplier { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
-  .scm-quality { background: #faf5ff; color: #6b46c1; border-color: #e9d8fd; }
-  .scm-strategy { background: #fff5f5; color: #c53030; border-color: #fed7d7; }
-  .scm-digital { background: #ebf8ff; color: #2c5282; border-color: #bee3f8; }
-
-  .module-label {
-    font-size: 0.78rem;
-    color: #718096;
-    font-weight: 600;
-    margin-top: 1rem;
-    margin-bottom: 0.3rem;
-  }
 
   /* === 查看原文按钮 === */
   .source-links {
@@ -264,7 +291,7 @@
     text-decoration: none;
   }
   .source-btn::before {
-    content: "🔗";
+    content: "\1F517";
     font-size: 0.7rem;
   }
 
@@ -281,10 +308,20 @@
   }
 
   /* === Pure CSS Filtering === */
-  #filter-report:checked ~ .content-area .card:not(.report),
-  #filter-case:checked ~ .content-area .card:not(.case),
-  #filter-tech:checked ~ .content-area .card:not(.tech),
-  #filter-policy:checked ~ .content-area .card:not(.policy) {
+  /* Category filtering */
+  #cat-report:checked ~ .content-area .card:not(.report),
+  #cat-case:checked ~ .content-area .card:not(.case),
+  #cat-tech:checked ~ .content-area .card:not(.tech),
+  #cat-policy:checked ~ .content-area .card:not(.policy) {
+    display: none;
+  }
+  /* SCM module filtering */
+  #scm-procurement:checked ~ .content-area .card:not(.procurement),
+  #scm-cost:checked ~ .content-area .card:not(.cost),
+  #scm-supplier:checked ~ .content-area .card:not(.supplier),
+  #scm-quality:checked ~ .content-area .card:not(.quality),
+  #scm-strategy:checked ~ .content-area .card:not(.strategy),
+  #scm-digital:checked ~ .content-area .card:not(.digital) {
     display: none;
   }
 
@@ -376,22 +413,45 @@
   <span class="badge">📚 知识库台账 · 持续更新</span>
 </header>
 
-<!-- Filter Bar (Pure CSS, no JS) -->
-<!-- Radio inputs must be siblings of .content-area for CSS filtering -->
-<input type="radio" name="filter" id="filter-all" checked>
-<input type="radio" name="filter" id="filter-report">
-<input type="radio" name="filter" id="filter-case">
-<input type="radio" name="filter" id="filter-tech">
-<input type="radio" name="filter" id="filter-policy">
+<!-- Radio inputs must be siblings of .content-area for pure CSS filtering -->
+<!-- Category filters -->
+<input type="radio" name="cat" id="cat-all" checked>
+<input type="radio" name="cat" id="cat-report">
+<input type="radio" name="cat" id="cat-case">
+<input type="radio" name="cat" id="cat-tech">
+<input type="radio" name="cat" id="cat-policy">
+<!-- SCM module filters -->
+<input type="radio" name="scm" id="scm-all" checked>
+<input type="radio" name="scm" id="scm-procurement">
+<input type="radio" name="scm" id="scm-cost">
+<input type="radio" name="scm" id="scm-supplier">
+<input type="radio" name="scm" id="scm-quality">
+<input type="radio" name="scm" id="scm-strategy">
+<input type="radio" name="scm" id="scm-digital">
 
+<!-- Filter Bar (Pure CSS, no JS) -->
 <nav class="filter-bar">
   <div class="container">
-    <span class="filter-label">筛选：</span>
-    <label for="filter-all">全部</label>
-    <label for="filter-report">📋 咨询机构报告</label>
-    <label for="filter-case">🏭 产业落地案例</label>
-    <label for="filter-tech">⚙️ 技术应用</label>
-    <label for="filter-policy">📜 政策动态</label>
+    <!-- Row 1: Category filter -->
+    <div class="filter-row">
+      <span class="filter-label">分类：</span>
+      <label for="cat-all">全部</label>
+      <label for="cat-report">📋 咨询报告</label>
+      <label for="cat-case">🏭 产业案例</label>
+      <label for="cat-tech">⚙️ 技术应用</label>
+      <label for="cat-policy">📜 政策动态</label>
+    </div>
+    <!-- Row 2: SCM module filter -->
+    <div class="filter-row">
+      <span class="filter-label-scm">模块：</span>
+      <label for="scm-all">全部</label>
+      <label for="scm-procurement">生产采购</label>
+      <label for="scm-cost">成本管理</label>
+      <label for="scm-supplier">供应商管理</label>
+      <label for="scm-quality">技术质量</label>
+      <label for="scm-strategy">战略运营</label>
+      <label for="scm-digital">数字化设计</label>
+    </div>
   </div>
 </nav>
 
@@ -400,13 +460,19 @@
   <div class="container">
 
     <!-- ======================== -->
-    <!-- 咨询机构报告 -->
+    <!-- 卡片1: 五大咨询巨头 -->
     <!-- ======================== -->
-    <div class="card report">
+    <div class="card report procurement cost supplier strategy">
       <div class="card-header">
         <span class="card-category cat-report">咨询机构报告</span>
         <h2 class="card-title">五大咨询巨头采购AI共识（2026年7月）</h2>
         <span class="card-date">2026-07</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+        <span class="scm-tag scm-cost">成本管理</span>
+        <span class="scm-tag scm-supplier">供应商管理</span>
+        <span class="scm-tag scm-strategy">供应链战略运营</span>
       </div>
       <div class="card-body">
         <h4>🔑 核心观点</h4>
@@ -426,14 +492,6 @@
           <li>把数据先理干净</li>
           <li>别把AI套在旧流程上</li>
         </ul>
-
-        <div class="module-label">🔗 关联供应链模块</div>
-        <div class="scm-modules">
-          <span class="scm-tag scm-procurement">供应链生产采购</span>
-          <span class="scm-tag scm-cost">成本管理</span>
-          <span class="scm-tag scm-supplier">供应商管理</span>
-          <span class="scm-tag scm-strategy">供应链战略运营</span>
-        </div>
       </div>
       <div class="card-source">
         来源：贝恩 · 麦肯锡 · Gartner · 德勤 · BCG 2026年7月报告
@@ -446,13 +504,18 @@
     </div>
 
     <!-- ======================== -->
-    <!-- 产业落地案例 -->
+    <!-- 卡片2: 平湖羽绒 -->
     <!-- ======================== -->
-    <div class="card case">
+    <div class="card case procurement quality digital">
       <div class="card-header">
         <span class="card-category cat-case">产业落地案例</span>
         <h2 class="card-title">平湖羽绒产业数智化转型</h2>
         <span class="card-date">2026-07-25</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+        <span class="scm-tag scm-quality">技术与质量管理</span>
+        <span class="scm-tag scm-digital">数字化设计</span>
       </div>
       <div class="card-body">
         <h4>🔑 核心要点</h4>
@@ -462,13 +525,6 @@
           <li>平湖年产羽绒服超 <span class="highlight">3亿件</span>，从"拼产能"转向"拼数智"</li>
           <li>产业带整体从传统制造向数字化、智能化方向加速转型</li>
         </ul>
-
-        <div class="module-label">🔗 关联供应链模块</div>
-        <div class="scm-modules">
-          <span class="scm-tag scm-procurement">供应链生产采购</span>
-          <span class="scm-tag scm-quality">技术与质量管理</span>
-          <span class="scm-tag scm-digital">数字化设计</span>
-        </div>
       </div>
       <div class="card-source">
         来源：网易 · 新浪财经 · 平湖市人民政府
@@ -481,40 +537,197 @@
     </div>
 
     <!-- ======================== -->
-    <!-- 模板：新增条目请复制以下结构 -->
+    <!-- 卡片3: SHEIN 小单快反 -->
     <!-- ======================== -->
-    <!--
-    <div class="card 分类class">
+    <div class="card case procurement supplier strategy">
       <div class="card-header">
-        <span class="card-category cat-分类">分类名称</span>
-        <h2 class="card-title">条目标题</h2>
-        <span class="card-date">日期</span>
+        <span class="card-category cat-case">产业落地案例</span>
+        <h2 class="card-title">SHEIN "小单快反"柔性供应链</h2>
+        <span class="card-date">2026-06</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+        <span class="scm-tag scm-supplier">供应商管理</span>
+        <span class="scm-tag scm-strategy">供应链战略运营</span>
       </div>
       <div class="card-body">
         <h4>🔑 核心要点</h4>
         <ul>
-          <li>要点1</li>
-          <li>要点2</li>
+          <li>自研<span class="highlight">"SHEIN链"</span>产业协同体系，串联品牌与供应商全链路数字化</li>
+          <li>AI Agent系统每天处理百万级SKU，库存周转仅<span class="highlight">30天</span>（传统品牌的1/3）</li>
+          <li>滞销库存占比不到10%，个性化推荐点击率提升<span class="highlight">40%</span></li>
+          <li>广州服装制造创新研究中心累计开发<span class="highlight">170+</span>创新工具，向供应商交付近6000件，工序效率提升80%</li>
+          <li>"全国500城产业带出海"计划，第三方卖家也可接入柔性按需体系</li>
         </ul>
-
-        <div class="module-label">🔗 关联供应链模块</div>
-        <div class="scm-modules">
-          <span class="scm-tag scm-procurement">供应链生产采购</span>
-          <span class="scm-tag scm-cost">成本管理</span>
-          <span class="scm-tag scm-supplier">供应商管理</span>
-          <span class="scm-tag scm-quality">技术与质量管理</span>
-          <span class="scm-tag scm-strategy">供应链战略运营</span>
-          <span class="scm-tag scm-digital">数字化设计</span>
-        </div>
       </div>
       <div class="card-source">
-        来源：来源名称
+        来源：光明网 · 36氪
         <div class="source-links">
-          <a class="source-btn" href="链接" target="_blank" rel="noopener">来源名 · 原文</a>
+          <a class="source-btn" href="http://economy.gmw.cn/2026-06/26/content_38851153.htm" target="_blank" rel="noopener">光明网 · 原文</a>
+          <a class="source-btn" href="https://36kr.com/p/3885240998621447" target="_blank" rel="noopener">36氪 · 原文</a>
         </div>
       </div>
     </div>
-    -->
+
+    <!-- ======================== -->
+    <!-- 卡片4: 优衣库 AI+RFID -->
+    <!-- ======================== -->
+    <div class="card case cost procurement strategy">
+      <div class="card-header">
+        <span class="card-category cat-case">产业落地案例</span>
+        <h2 class="card-title">优衣库 AI+RFID 智能库存管理</h2>
+        <span class="card-date">2026</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-cost">成本管理</span>
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+        <span class="scm-tag scm-strategy">供应链战略运营</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>每件衣服内置RFID芯片，AI系统实时追踪库存、销售和顾客动线</li>
+          <li>库存准确率从70%飙升至<span class="highlight">97%</span>，缺货率降低<span class="highlight">50%</span></li>
+          <li>仓储拣货效率提升<span class="highlight">19倍</span>，全球库存周转天数从92天缩短至68天</li>
+          <li>AI预测时尚趋势：抓取社交平台热词、搜索数据，提前判断流行颜色和版型</li>
+          <li>库存成本年省超<span class="highlight">10亿人民币</span></li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：CSDN
+        <div class="source-links">
+          <a class="source-btn" href="https://blog.csdn.net/yellowzf3/article/details/153430114" target="_blank" rel="noopener">CSDN · 原文</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 卡片5: 欧洲三巨头AI视觉革命 -->
+    <!-- ======================== -->
+    <div class="card case quality digital cost">
+      <div class="card-header">
+        <span class="card-category cat-case">产业落地案例</span>
+        <h2 class="card-title">Zara/H&M/Mango 欧洲三巨头AI视觉革命</h2>
+        <span class="card-date">2026</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-quality">技术与质量管理</span>
+        <span class="scm-tag scm-digital">数字化设计</span>
+        <span class="scm-tag scm-cost">成本管理</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>Zara引入AI生成真人模特试穿虚拟图像，所有模特形象编辑前均征得本人同意</li>
+          <li>H&M创建<span class="highlight">AI模特克隆体</span>用于营销</li>
+          <li>Mango Teen推出完全AI生成的广告大片，覆盖全球<span class="highlight">95个市场</span></li>
+          <li>Zalando通过AI生成产品图像，图像制作成本降低<span class="highlight">90%</span>（麦肯锡数据）</li>
+          <li>Valentino、Moncler、Balenciaga等奢侈品牌也将AI用于大秀背景和营销</li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：网易
+        <div class="source-links">
+          <a class="source-btn" href="https://www.163.com/dy/article/L2CK1DI00556LB6D.html" target="_blank" rel="noopener">网易 · 原文</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 卡片6: 国产运动品牌AI设计提速 -->
+    <!-- ======================== -->
+    <div class="card case quality digital cost">
+      <div class="card-header">
+        <span class="card-category cat-case">产业落地案例</span>
+        <h2 class="card-title">森马/安踏/巴拉巴拉 国产运动品牌AI设计提速</h2>
+        <span class="card-date">2026</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-quality">技术与质量管理</span>
+        <span class="scm-tag scm-digital">数字化设计</span>
+        <span class="scm-tag scm-cost">成本管理</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>森马：设计师借助AI工具，灵感到成衣效果图从3天缩短到<span class="highlight">30秒</span>，设计研发效率提升35%</li>
+          <li>安踏：AI设计系统<span class="highlight">4天</span>产出市场爆款（传统需1个月），支撑200亿订货额</li>
+          <li>巴拉巴拉：AI虚拟模特替代真人实拍，节省成本超<span class="highlight">200万元</span></li>
+          <li>AI生成模特上身图在面料肌理、颜色还原上已达"以假乱真"水平</li>
+          <li>实现"先测款后生产"的<span class="highlight">无库存模式</span></li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：新浪
+        <div class="source-links">
+          <a class="source-btn" href="https://k.sina.cn/article_7879996047_1d5af328f06801i1xi.html" target="_blank" rel="noopener">新浪 · 原文</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 卡片7: 联兴发针织 5G+AI智慧质检 -->
+    <!-- ======================== -->
+    <div class="card tech quality procurement">
+      <div class="card-header">
+        <span class="card-category cat-tech">技术应用</span>
+        <h2 class="card-title">联兴发针织 5G+AI智慧质检标杆</h2>
+        <span class="card-date">2026-07</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-quality">技术与质量管理</span>
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>与中国电信联合研发<span class="highlight">"5G+AI智慧供应链融合质检项目"</span></li>
+          <li>AI智能验布机自动识别<span class="highlight">30+</span>种布面瑕疵，检测准确率远超人工</li>
+          <li>效率对比：人工验布一人一天50匹 vs AI一机一天<span class="highlight">200匹</span>（3倍效率差）</li>
+          <li><span class="highlight">0.1毫米</span>的断纱和油污也能精准识别</li>
+          <li>入选工信部<span class="highlight">《2025年5G工厂名录》</span></li>
+          <li>5G网络实现物物相连，坯布下线即自动导引运输车到位，物流效率提高50%+</li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：央广网 · 人民政协网
+        <div class="source-links">
+          <a class="source-btn" href="http://www.cnr.cn/fj/yw/20260722/t20260722_527722926.shtml" target="_blank" rel="noopener">央广网 · 原文</a>
+          <a class="source-btn" href="https://www.rmzxw.com.cn/c/2026-07-15/3947158.shtml" target="_blank" rel="noopener">人民政协网 · 原文</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 卡片8: 酷特智能 KTOS -->
+    <!-- ======================== -->
+    <div class="card tech procurement quality strategy">
+      <div class="card-header">
+        <span class="card-category cat-tech">技术应用</span>
+        <h2 class="card-title">酷特智能 KTOS AI操作系统 大规模个性化定制</h2>
+        <span class="card-date">2026-07</span>
+      </div>
+      <div class="scm-modules">
+        <span class="scm-tag scm-procurement">供应链生产采购</span>
+        <span class="scm-tag scm-quality">技术与质量管理</span>
+        <span class="scm-tag scm-strategy">供应链战略运营</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>自研<span class="highlight">KTOS AI</span>企业应用操作系统，具备感知、记忆、思考、决策、协同、自进化六大能力</li>
+          <li>实现<span class="highlight">"一人一版、一衣一款、7个工作日交付"</span>全柔性生产</li>
+          <li>零成品库存，管理成本降低<span class="highlight">80%+</span>，综合效益提升50%+</li>
+          <li>入选工信部<span class="highlight">《2025年人工智能应用典型案例》</span></li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：中国纺织工业联合会
+        <div class="source-links">
+          <a class="source-btn" href="http://www.cntac.org.cn/zixun/hangye/202607/t20260717_4416809.html" target="_blank" rel="noopener">中国纺织工业联合会 · 原文</a>
+        </div>
+      </div>
+    </div>
 
   </div>
 </main>
@@ -522,7 +735,7 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="update-info">
-    最后更新：<strong>2026-07-25</strong> ｜ 共收录 <strong>2</strong> 条知识
+    最后更新：<strong>2026-07-25</strong> ｜ 共收录 <strong>8</strong> 条知识
   </div>
   <div class="copyright">
     纺织服装行业AI与数字化转型知识库 · Powered by GitHub Pages
