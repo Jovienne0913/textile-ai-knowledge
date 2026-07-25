@@ -22,30 +22,30 @@
   .header {
     background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
     color: #fff;
-    padding: 3rem 1.5rem 2.5rem;
+    padding: 1.5rem 1.5rem 1.2rem;
     text-align: center;
   }
   .header h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
   .header .subtitle {
-    font-size: 1rem;
+    font-size: 0.88rem;
     opacity: 0.85;
     max-width: 600px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.5;
   }
   .header .badge {
     display: inline-block;
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.3);
     border-radius: 20px;
-    padding: 0.25rem 0.9rem;
-    font-size: 0.8rem;
-    margin-top: 1rem;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.75rem;
+    margin-top: 0.6rem;
     backdrop-filter: blur(4px);
   }
 
@@ -60,7 +60,7 @@
   .filter-bar {
     background: #fff;
     border-bottom: 1px solid #e2e8f0;
-    padding: 0.8rem 0;
+    padding: 0.5rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -98,7 +98,14 @@
     margin-right: 0.5rem;
     white-space: nowrap;
   }
-  /* Hide radio inputs */
+  /* Hide radio inputs (global) */
+  input[type="radio"].filter-input {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
   .filter-bar input[type="radio"] {
     position: absolute;
     opacity: 0;
@@ -413,21 +420,21 @@
   <span class="badge">📚 知识库台账 · 持续更新</span>
 </header>
 
-<!-- Radio inputs must be siblings of .content-area for pure CSS filtering -->
+<!-- Radio inputs must be siblings of .content-area for pure CSS filtering (hidden via .filter-input) -->
 <!-- Category filters -->
-<input type="radio" name="cat" id="cat-all" checked>
-<input type="radio" name="cat" id="cat-report">
-<input type="radio" name="cat" id="cat-case">
-<input type="radio" name="cat" id="cat-tech">
-<input type="radio" name="cat" id="cat-policy">
+<input type="radio" class="filter-input" name="cat" id="cat-all" checked>
+<input type="radio" class="filter-input" name="cat" id="cat-report">
+<input type="radio" class="filter-input" name="cat" id="cat-case">
+<input type="radio" class="filter-input" name="cat" id="cat-tech">
+<input type="radio" class="filter-input" name="cat" id="cat-policy">
 <!-- SCM module filters -->
-<input type="radio" name="scm" id="scm-all" checked>
-<input type="radio" name="scm" id="scm-procurement">
-<input type="radio" name="scm" id="scm-cost">
-<input type="radio" name="scm" id="scm-supplier">
-<input type="radio" name="scm" id="scm-quality">
-<input type="radio" name="scm" id="scm-strategy">
-<input type="radio" name="scm" id="scm-digital">
+<input type="radio" class="filter-input" name="scm" id="scm-all" checked>
+<input type="radio" class="filter-input" name="scm" id="scm-procurement">
+<input type="radio" class="filter-input" name="scm" id="scm-cost">
+<input type="radio" class="filter-input" name="scm" id="scm-supplier">
+<input type="radio" class="filter-input" name="scm" id="scm-quality">
+<input type="radio" class="filter-input" name="scm" id="scm-strategy">
+<input type="radio" class="filter-input" name="scm" id="scm-digital">
 
 <!-- Filter Bar (Pure CSS, no JS) -->
 <nav class="filter-bar">
