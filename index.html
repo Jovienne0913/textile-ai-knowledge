@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>纺织服装行业AI与数字化转型 · 知识库</title>
+<style>
+  /* === Reset & Base === */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f7fafc;
+    color: #2d3748;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  a { color: #3182ce; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* === Header === */
+  .header {
+    background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle {
+    font-size: 1rem;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 0.25rem 0.9rem;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    backdrop-filter: blur(4px);
+  }
+
+  /* === Container === */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* === Filter Bar (Pure CSS) === */
+  .filter-bar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .filter-bar .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .filter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+  /* Hide radio inputs */
+  .filter-bar input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .filter-bar label {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #cbd5e0;
+    color: #4a5568;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .filter-bar label:hover {
+    border-color: #3182ce;
+    color: #3182ce;
+  }
+  /* Active filter state */
+  #filter-all:checked ~ .container label[for="filter-all"],
+  #filter-report:checked ~ .container label[for="filter-report"],
+  #filter-case:checked ~ .container label[for="filter-case"],
+  #filter-tech:checked ~ .container label[for="filter-tech"],
+  #filter-policy:checked ~ .container label[for="filter-policy"] {
+    background: #1a365d;
+    color: #fff;
+    border-color: #1a365d;
+  }
+
+  /* === Content Cards === */
+  .content-area {
+    padding: 2rem 0 3rem;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease;
+  }
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .card-category {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  .cat-report { background: #ebf4ff; color: #2b6cb0; }
+  .cat-case { background: #f0fff4; color: #276749; }
+  .cat-tech { background: #faf5ff; color: #6b46c1; }
+  .cat-policy { background: #fffaf0; color: #c05621; }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a365d;
+    line-height: 1.4;
+    flex: 1;
+    min-width: 200px;
+  }
+  .card-date {
+    font-size: 0.82rem;
+    color: #a0aec0;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .card-body h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 1.2rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .card-body h4:first-child {
+    margin-top: 0;
+  }
+  .card-body ul {
+    list-style: none;
+    padding: 0;
+  }
+  .card-body ul li {
+    position: relative;
+    padding-left: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  .card-body ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3182ce;
+  }
+  .card-body .highlight {
+    background: #ebf8ff;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #2b6cb0;
+  }
+  .card-source {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+    font-size: 0.82rem;
+    color: #a0aec0;
+  }
+  .card-source a {
+    color: #3182ce;
+    margin-right: 1rem;
+  }
+
+  /* === Pure CSS Filtering === */
+  #filter-report:checked ~ .content-area .card:not(.report),
+  #filter-case:checked ~ .content-area .card:not(.case),
+  #filter-tech:checked ~ .content-area .card:not(.tech),
+  #filter-policy:checked ~ .content-area .card:not(.policy) {
+    display: none;
+  }
+
+  /* === Section Headers === */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .section-header::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a365d;
+  }
+  .section-count {
+    font-size: 0.75rem;
+    background: #edf2f7;
+    color: #718096;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+  }
+
+  /* === Footer === */
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid #e2e8f0;
+    background: #fff;
+  }
+  .footer .update-info {
+    font-size: 0.85rem;
+    color: #a0aec0;
+  }
+  .footer .update-info strong {
+    color: #4a5568;
+  }
+  .footer .copyright {
+    font-size: 0.78rem;
+    color: #cbd5e0;
+    margin-top: 0.5rem;
+  }
+
+  /* === Empty State === */
+  .empty-notice {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #a0aec0;
+    font-size: 0.9rem;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 640px) {
+    .header { padding: 2rem 1rem 1.5rem; }
+    .header h1 { font-size: 1.5rem; }
+    .header .subtitle { font-size: 0.9rem; }
+    .card { padding: 1.25rem; }
+    .card-title { font-size: 1.1rem; min-width: 150px; }
+    .card-header { flex-direction: column; }
+    .card-date { align-self: flex-start; }
+    .filter-bar .container { gap: 0.4rem; }
+    .filter-bar label { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1>纺织服装行业 AI 与数字化转型</h1>
+  <p class="subtitle">持续追踪行业智能化进程——从咨询机构洞察到产业落地实践</p>
+  <span class="badge">📚 知识库台账 · 持续更新</span>
+</header>
+
+<!-- Filter Bar (Pure CSS, no JS) -->
+<!-- Radio inputs must be siblings of .content-area for CSS filtering -->
+<input type="radio" name="filter" id="filter-all" checked>
+<input type="radio" name="filter" id="filter-report">
+<input type="radio" name="filter" id="filter-case">
+<input type="radio" name="filter" id="filter-tech">
+<input type="radio" name="filter" id="filter-policy">
+
+<nav class="filter-bar">
+  <div class="container">
+    <span class="filter-label">筛选：</span>
+    <label for="filter-all">全部</label>
+    <label for="filter-report">📋 咨询机构报告</label>
+    <label for="filter-case">🏭 产业落地案例</label>
+    <label for="filter-tech">⚙️ 技术应用</label>
+    <label for="filter-policy">📜 政策动态</label>
+  </div>
+</nav>
+
+<!-- Content Area -->
+<main class="content-area">
+  <div class="container">
+
+    <!-- ======================== -->
+    <!-- 咨询机构报告 -->
+    <!-- ======================== -->
+    <div class="card report">
+      <div class="card-header">
+        <span class="card-category cat-report">咨询机构报告</span>
+        <h2 class="card-title">五大咨询巨头采购AI共识（2026年7月）</h2>
+        <span class="card-date">2026-07</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心观点</h4>
+        <ul>
+          <li>采购AI已从<span class="highlight">"写邮件做分析"</span>进入<span class="highlight">"执行任务"</span>阶段</li>
+          <li><span class="highlight">72%</span> 的CEO愿意为供应链韧性多付10%以上成本（贝恩）</li>
+          <li><span class="highlight">71%</span> 的企业对AI自主决策缺乏信任（BCG）</li>
+          <li>近 <span class="highlight">40%</span> 的B2B买家已在使用 Agentic AI 做采购（德勤）</li>
+          <li>采购AI效率能提升 <span class="highlight">25-40%</span>（麦肯锡）</li>
+          <li>大部分企业还卡在<span class="highlight">"试点炼狱"</span>出不来</li>
+        </ul>
+
+        <h4>📌 行动建议</h4>
+        <ul>
+          <li>从辅助型Agent开始（供应商初筛、合同比对、支出分析）</li>
+          <li>先建治理框架再谈规模化</li>
+          <li>把数据先理干净</li>
+          <li>别把AI套在旧流程上</li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：贝恩 · 麦肯锡 · Gartner · 德勤 · BCG 2026年7月报告
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 产业落地案例 -->
+    <!-- ======================== -->
+    <div class="card case">
+      <div class="card-header">
+        <span class="card-category cat-case">产业落地案例</span>
+        <h2 class="card-title">平湖羽绒产业数智化转型</h2>
+        <span class="card-date">2026-07-25</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li><span class="highlight">"平小羽"</span> 羽绒服采购全能AI助理正式上线</li>
+          <li><span class="highlight">AI数字试衣</span>场景落地，消费者可在线虚拟试穿</li>
+          <li>平湖年产羽绒服超 <span class="highlight">3亿件</span>，从"拼产能"转向"拼数智"</li>
+          <li>产业带整体从传统制造向数字化、智能化方向加速转型</li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：<a href="https://www.163.com" target="_blank" rel="noopener">网易</a> · <a href="https://finance.sina.com.cn" target="_blank" rel="noopener">新浪财经</a> · <a href="http://www.pinghu.gov.cn" target="_blank" rel="noopener">平湖市人民政府</a>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- 模板：新增条目请复制以下结构 -->
+    <!-- ======================== -->
+    <!--
+    <div class="card 分类class">
+      <div class="card-header">
+        <span class="card-category cat-分类">分类名称</span>
+        <h2 class="card-title">条目标题</h2>
+        <span class="card-date">日期</span>
+      </div>
+      <div class="card-body">
+        <h4>🔑 核心要点</h4>
+        <ul>
+          <li>要点1</li>
+          <li>要点2</li>
+        </ul>
+      </div>
+      <div class="card-source">
+        来源：<a href="链接">来源名称</a>
+      </div>
+    </div>
+    -->
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="update-info">
+    最后更新：<strong>2026-07-25</strong> ｜ 共收录 <strong>2</strong> 条知识
+  </div>
+  <div class="copyright">
+    纺织服装行业AI与数字化转型知识库 · Powered by GitHub Pages
+  </div>
+</footer>
+
+</body>
+</html>
