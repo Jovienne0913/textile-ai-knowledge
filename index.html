@@ -196,10 +196,21 @@
     min-width: 200px;
   }
   .card-date {
-    font-size: 0.82rem;
-    color: #a0aec0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: #3182ce;
+    font-weight: 600;
     flex-shrink: 0;
     white-space: nowrap;
+    background: #ebf4ff;
+    padding: 0.15rem 0.6rem;
+    border-radius: 10px;
+  }
+  .card-date::before {
+    content: "📅";
+    font-size: 0.8rem;
   }
 
   /* === 供应链模块标签（紧跟卡片标题下方） === */
@@ -583,7 +594,7 @@
       <div class="card-header">
         <span class="card-category cat-case">产业落地案例</span>
         <h2 class="card-title">优衣库 AI+RFID 智能库存管理</h2>
-        <span class="card-date">2026</span>
+        <span class="card-date">2026-07</span>
       </div>
       <div class="scm-modules">
         <span class="scm-tag scm-cost">成本管理</span>
@@ -615,7 +626,7 @@
       <div class="card-header">
         <span class="card-category cat-case">产业落地案例</span>
         <h2 class="card-title">Zara/H&M/Mango 欧洲三巨头AI视觉革命</h2>
-        <span class="card-date">2026</span>
+        <span class="card-date">2026-07</span>
       </div>
       <div class="scm-modules">
         <span class="scm-tag scm-quality">技术与质量管理</span>
@@ -647,7 +658,7 @@
       <div class="card-header">
         <span class="card-category cat-case">产业落地案例</span>
         <h2 class="card-title">森马/安踏/巴拉巴拉 国产运动品牌AI设计提速</h2>
-        <span class="card-date">2026</span>
+        <span class="card-date">2026-07</span>
       </div>
       <div class="scm-modules">
         <span class="scm-tag scm-quality">技术与质量管理</span>
