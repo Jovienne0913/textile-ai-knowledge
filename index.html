@@ -1,5 +1,481 @@
 <!DOCTYPE html>
-<html lan
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>纺织服装行业AI与数字化转型 · 知识库</title>
+<style>
+  /* === Reset & Base === */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f7fafc;
+    color: #2d3748;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  a { color: #3182ce; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* === Header === */
+  .header {
+    background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);
+    color: #fff;
+    padding: 1.5rem 1.5rem 1.2rem;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .header .subtitle {
+    font-size: 0.88rem;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.75rem;
+    margin-top: 0.6rem;
+    backdrop-filter: blur(4px);
+  }
+
+  /* === Container === */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* === Filter Bar (Pure CSS) === */
+  .filter-bar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .filter-bar .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .filter-row + .filter-row {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #edf2f7;
+  }
+  .filter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+  .filter-label-scm {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2b6cb0;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+  /* Hide radio inputs (global) */
+  input[type="radio"].filter-input {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .filter-bar input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .filter-bar label {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #cbd5e0;
+    color: #4a5568;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .filter-bar label:hover {
+    border-color: #3182ce;
+    color: #3182ce;
+  }
+  /* Active filter state - Category (navy) */
+  #cat-all:checked ~ nav label[for="cat-all"],
+  #cat-report:checked ~ nav label[for="cat-report"],
+  #cat-case:checked ~ nav label[for="cat-case"],
+  #cat-tech:checked ~ nav label[for="cat-tech"],
+  #cat-policy:checked ~ nav label[for="cat-policy"] {
+    background: #1a365d;
+    color: #fff;
+    border-color: #1a365d;
+  }
+  /* Active filter state - SCM modules (teal) */
+  #scm-all:checked ~ nav label[for="scm-all"],
+  #scm-procurement:checked ~ nav label[for="scm-procurement"],
+  #scm-cost:checked ~ nav label[for="scm-cost"],
+  #scm-supplier:checked ~ nav label[for="scm-supplier"],
+  #scm-quality:checked ~ nav label[for="scm-quality"],
+  #scm-strategy:checked ~ nav label[for="scm-strategy"],
+  #scm-digital:checked ~ nav label[for="scm-digital"] {
+    background: #2b6cb0;
+    color: #fff;
+    border-color: #2b6cb0;
+  }
+
+  /* === Content Cards === */
+  .content-area {
+    padding: 2rem 0 3rem;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease;
+  }
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .card-category {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  .cat-report { background: #ebf4ff; color: #2b6cb0; }
+  .cat-case { background: #f0fff4; color: #276749; }
+  .cat-tech { background: #faf5ff; color: #6b46c1; }
+  .cat-policy { background: #fffaf0; color: #c05621; }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a365d;
+    line-height: 1.4;
+    flex: 1;
+    min-width: 200px;
+  }
+  .card-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: #3182ce;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: #ebf4ff;
+    padding: 0.15rem 0.6rem;
+    border-radius: 10px;
+  }
+  .card-date::before {
+    content: "📅";
+    font-size: 0.8rem;
+  }
+
+  /* === 供应链模块标签（紧跟卡片标题下方） === */
+  .scm-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .scm-tag {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid;
+  }
+  .scm-procurement { background: #ebf4ff; color: #2b6cb0; border-color: #bee3f8; }
+  .scm-cost { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .scm-supplier { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
+  .scm-quality { background: #faf5ff; color: #6b46c1; border-color: #e9d8fd; }
+  .scm-strategy { background: #fff5f5; color: #c53030; border-color: #fed7d7; }
+  .scm-digital { background: #e6fffa; color: #234e52; border-color: #b2f5ea; }
+
+  .card-body {
+    margin-top: 0.6rem;
+  }
+  .card-body h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 1.2rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .card-body h4:first-child {
+    margin-top: 0;
+  }
+  .card-body ul {
+    list-style: none;
+    padding: 0;
+  }
+  .card-body ul li {
+    position: relative;
+    padding-left: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  .card-body ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3182ce;
+  }
+  .card-body .highlight {
+    background: #ebf8ff;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #2b6cb0;
+  }
+
+  /* === 查看原文按钮 === */
+  .source-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+  .source-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: #edf2f7;
+    color: #2d3748;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .source-btn:hover {
+    background: #3182ce;
+    color: #fff;
+    border-color: #3182ce;
+    text-decoration: none;
+  }
+  .source-btn::before {
+    content: "\1F517";
+    font-size: 0.7rem;
+  }
+
+  .card-source {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+    font-size: 0.82rem;
+    color: #a0aec0;
+  }
+  .card-source a {
+    color: #3182ce;
+    margin-right: 1rem;
+  }
+
+  /* === Pure CSS Filtering === */
+  /* Category filtering */
+  #cat-report:checked ~ .content-area .card:not(.report),
+  #cat-case:checked ~ .content-area .card:not(.case),
+  #cat-tech:checked ~ .content-area .card:not(.tech),
+  #cat-policy:checked ~ .content-area .card:not(.policy) {
+    display: none;
+  }
+  /* SCM module filtering */
+  #scm-procurement:checked ~ .content-area .card:not(.procurement),
+  #scm-cost:checked ~ .content-area .card:not(.cost),
+  #scm-supplier:checked ~ .content-area .card:not(.supplier),
+  #scm-quality:checked ~ .content-area .card:not(.quality),
+  #scm-strategy:checked ~ .content-area .card:not(.strategy),
+  #scm-digital:checked ~ .content-area .card:not(.digital) {
+    display: none;
+  }
+
+  /* === Section Headers === */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .section-header::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a365d;
+  }
+  .section-count {
+    font-size: 0.75rem;
+    background: #edf2f7;
+    color: #718096;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+  }
+
+  /* === Footer === */
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid #e2e8f0;
+    background: #fff;
+  }
+  .footer .update-info {
+    font-size: 0.85rem;
+    color: #a0aec0;
+  }
+  .footer .update-info strong {
+    color: #4a5568;
+  }
+  .footer .copyright {
+    font-size: 0.78rem;
+    color: #cbd5e0;
+    margin-top: 0.5rem;
+  }
+
+  /* === Empty State === */
+  .empty-notice {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #a0aec0;
+    font-size: 0.9rem;
+  }
+
+  /* === Responsive === */
+  @media (max-width: 640px) {
+    .header { padding: 2rem 1rem 1.5rem; }
+    .header h1 { font-size: 1.5rem; }
+    .header .subtitle { font-size: 0.9rem; }
+    .card { padding: 1.25rem; }
+    .card-title { font-size: 1.1rem; min-width: 150px; }
+    .card-header { flex-direction: column; }
+    .card-date { align-self: flex-start; }
+    .filter-bar .container { gap: 0.4rem; }
+    .filter-bar label { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1>纺织服装行业 AI 与数字化转型</h1>
+  <p class="subtitle">持续追踪行业智能化进程——从咨询机构洞察到产业落地实践</p>
+  <span class="badge">📚 知识库台账 · 持续更新</span>
+</header>
+
+<!-- Radio inputs must be siblings of .content-area for pure CSS filtering (hidden via .filter-input) -->
+<!-- Category filters -->
+<input type="radio" class="filter-input" name="cat" id="cat-all" checked>
+<input type="radio" class="filter-input" name="cat" id="cat-report">
+<input type="radio" class="filter-input" name="cat" id="cat-case">
+<input type="radio" class="filter-input" name="cat" id="cat-tech">
+<input type="radio" class="filter-input" name="cat" id="cat-policy">
+<!-- SCM module filters -->
+<input type="radio" class="filter-input" name="scm" id="scm-all" checked>
+<input type="radio" class="filter-input" name="scm" id="scm-procurement">
+<input type="radio" class="filter-input" name="scm" id="scm-cost">
+<input type="radio" class="filter-input" name="scm" id="scm-supplier">
+<input type="radio" class="filter-input" name="scm" id="scm-quality">
+<input type="radio" class="filter-input" name="scm" id="scm-strategy">
+<input type="radio" class="filter-input" name="scm" id="scm-digital">
+
+<!-- Filter Bar (Pure CSS, no JS) -->
+<nav class="filter-bar">
+  <div class="container">
+    <!-- Row 1: Category filter -->
+    <div class="filter-row">
+      <span class="filter-label">分类：</span>
+      <label for="cat-all">全部</label>
+      <label for="cat-report">📋 咨询报告</label>
+      <label for="cat-case">🏭 产业案例</label>
+      <label for="cat-tech">⚙️ 技术应用</label>
+      <label for="cat-policy">📜 政策动态</label>
+    </div>
+    <!-- Row 2: SCM module filter -->
+    <div class="filter-row">
+      <span class="filter-label-scm">模块：</span>
+      <label for="scm-all">全部</label>
+      <label for="scm-procurement">生产采购</label>
+      <label for="scm-cost">成本管理</label>
+      <label for="scm-supplier">供应商管理</label>
+      <label for="scm-quality">技术质量</label>
+      <label for="scm-strategy">战略运营</label>
+      <label for="scm-digital">数字化设计</label>
+    </div>
+  </div>
+</nav>
+
+<!-- Content Area -->
+<main class="content-area">
+  <div class="container">
 
 
     <!-- ======================== -->
@@ -72,23 +548,6 @@
     </div>
 
   </div>
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="update-info">
-    最后更新：<strong>2026-07-29</strong> ｜ 共收录 <strong>25</strong> 条知识
-  </div>
-  <div class="copyright">
-    纺织服装行业AI与数字化转型知识库 · Powered by GitHub Pages
-  </div>
-</footer>
-
-</body>
-</html
-
-
-    <!-- ======================== -->
     <!-- 卡片2: 平湖羽绒 -->
     <!-- ======================== -->
     <div class="card case procurement quality digital">
@@ -893,14 +1352,18 @@
           <li>滞销库存占比不到10%，个性化推荐点击率提升<span class="highlight">40%</span></li>
           <li>广州服装制造创新研究中心累计开发<span class="highlight">170+</span>创新工具，向供应商交付近6000件，工序效率提升80%</li>
           <li>"全国500城产业带出海"计划，第三方卖家也可接入柔性按需体系</li>
-        </ul>
-      </div>
-      <div class="card-source">
-        来源：光明网 · 36氪
-        <div class="source-links">
-          <a class="source-btn" href="http://economy.gmw.cn/2026-06/26/content_38851153.htm" target="_blank" rel="noopener">光明网 · 原文</a>
-          <a class="source-btn" href="https://36kr.com/p/3885240998621447" target="_blank" rel="noopener">36氪 · 原文</a>
-        </div>
-      </div>
-    </div>
->
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="update-info">
+    最后更新：<strong>2026-07-29</strong> ｜ 共收录 <strong>25</strong> 条知识
+  </div>
+  <div class="copyright">
+    纺织服装行业AI与数字化转型知识库 · Powered by GitHub Pages
+  </div>
+</footer>
+
+</body>
+</html>
